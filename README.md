@@ -27,6 +27,8 @@ Eglot+TRAMP require block to be tangled/exported to file, we use “/tmp/tmp.py�
 (setq 'org-eglot-starter #'my/eglot-starter)
 ```
 
+Now you can use “C-c '” key to edit source block, which is org-edit-special command.
+
 # Source
 This package is a little extension of this function from https://github.com/joaotavora/eglot/issues/216#issuecomment-1052931508
 ```Elisp
