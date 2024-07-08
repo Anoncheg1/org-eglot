@@ -43,10 +43,12 @@ May check `default-directory' or `buffer-file-name and decide
 what `eglot-server-programs' to use.  Check that variable `buffer-file-name'
 is remote and call `eglot-ensure' function.
 Consider `eglot-shutdown-all' for reconnection."
+  :group 'org-eglot
   :type 'function)
 
 (defcustom org-eglot-starter-local org-eglot-starter
   "`eglot-ensure' or wrap around it."
+  :group 'org-eglot
   :type 'function)
 
 (defun org-eglot--org-edit-special-advice (orig-fun &rest args)
@@ -60,7 +62,7 @@ Optional argument ARGS ."
   (interactive)
   (let* ((info (org-babel-get-src-block-info)) ; available only here
          (dir (cdr (assq :dir (nth 2 info))))
-         tangt angled-file-name)
+         angled-file-name)
     ;; (print (list "dir" dir))
     ;; if dir specified and remote
     (if (and dir (file-remote-p dir))
@@ -81,13 +83,10 @@ Optional argument ARGS ."
           ;; plugins can see an actual file.
           (setq-local default-directory dir) ; reqguired for Eglot
           (setq-local buffer-file-name tangled-file-name) ; requiered for Eglot
-          ;; if Eglot configured -
-          (when (and eglot-workspace-configuration eglot-server-programs)
-            (funcall org-eglot-starter)))
-      ;; else - if Eglot configured
-      (when (and eglot-workspace-configuration eglot-server-programs)
-        (apply orig-fun args)
-        (funcall org-eglot-starter-local)))))
+          (funcall org-eglot-starter))
+      ;; else - local
+      (apply orig-fun args)
+      (funcall org-eglot-starter-local))))
 
 (advice-add 'org-edit-special :around 'org-eglot--org-edit-special-advice)
 
