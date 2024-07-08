@@ -9,7 +9,6 @@ Eglot+TRAMP require block to be tangled/exported to file, we use â€œ/tmp/tmp.pyâ
 (require 'org-eglot)
 
 (defun my/eglot-starter()
-  "Local example. For remote just change configuration section."
   ;; shutdown all connections
   (eglot-shutdown-all) ; two connection to the same file is not allowed
   ;; Eglot configuration
@@ -25,8 +24,7 @@ Eglot+TRAMP require block to be tangled/exported to file, we use â€œ/tmp/tmp.pyâ
   ;; start Eglot
   (eglot-ensure))
 
-(setq 'org-eglot-starter-local #'my/eglot-starter)
-;; (setq 'org-eglot-starter #'my/eglot-starter) ; uncomment for remote Eglot configuration
+(setq 'org-eglot-starter #'my/eglot-starter)
 ```
 
 # Source
