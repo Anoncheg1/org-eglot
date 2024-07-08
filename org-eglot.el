@@ -62,7 +62,7 @@ Optional argument ARGS ."
   (interactive)
   (let* ((info (org-babel-get-src-block-info)) ; available only here
          (dir (cdr (assq :dir (nth 2 info))))
-         angled-file-name)
+         tangled-file-name)
     ;; (print (list "dir" dir))
     ;; if dir specified and remote
     (if (and dir (file-remote-p dir))
