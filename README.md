@@ -3,6 +3,33 @@ Allow to edit "Org source block" with Eglot and TRAMP on remote LSP server.
 
 Eglot+TRAMP require block to be tangled/exported to file, we use “/tmp/tmp.py” by default.
 
+# Example of usage
+```Elisp
+(add-to-list 'load-path "~/.emacs.d/") ; directory with file org-eglot.el
+(require 'org-eglot)
+
+(defun my/eglot-starter()
+  "Local example. For remote just change configuration section."
+  ;; shutdown all connections
+  (eglot-shutdown-all) ; two connection to the same file is not allowed
+  ;; Eglot configuration
+  (setq eglot-workspace-configuration
+                '(:pylsp (:plugins (:jedi_completion (:include_params t
+                                                      :fuzzy t)
+                                    :pylint (:enabled :json-false)))
+                  :gopls (:usePlaceholders t)))
+  (setq eglot-server-programs
+          '((python-ts-mode . ("pylsp"))
+            (python-mode . ("pylsp"))
+            ))
+  ;; start Eglot
+  (eglot-ensure))
+
+(setq 'org-eglot-starter-local #'my/eglot-starter)
+;; (setq 'org-eglot-starter #'my/eglot-starter) ; uncomment for remote Eglot configuration
+```
+
+# Source
 This package is a little extension of this function from https://github.com/joaotavora/eglot/issues/216#issuecomment-1052931508
 ```Elisp
 (defun mb/org-babel-edit:python ()
