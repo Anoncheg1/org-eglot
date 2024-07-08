@@ -11,7 +11,7 @@ Eglot+TRAMP require block to be tangled/exported to file, we use â€œ/tmp/tmp.pyâ
 (defun my/eglot-starter()
   ;; shutdown all connections
   (eglot-shutdown-all) ; two connection to the same file is not allowed
-  ;; Eglot configuration
+  ;; Eglot configuration example
   (setq eglot-workspace-configuration
                 '(:pylsp (:plugins (:jedi_completion (:include_params t
                                                       :fuzzy t)
