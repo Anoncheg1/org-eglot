@@ -37,7 +37,7 @@
 
 ;;; Code:
 
-(defcustom org-eglot-starter #'my/eglot-start
+(defcustom org-eglot-starter #'eglot-ensure
   "`eglot-ensure' or wrap around it.
 May check `default-directory' or `buffer-file-name and decide
 what `eglot-server-programs' to use.  Check that variable `buffer-file-name'
