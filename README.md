@@ -1,6 +1,8 @@
 # org-eglot
 Allow to edit "Org source block" with Eglot and TRAMP on remote LSP server.
 
+Eglot+TRAMP require block to be tangled/exported to file, we use “/tmp/tmp.py” by default.
+
 This package is a little extension of this function from https://github.com/joaotavora/eglot/issues/216#issuecomment-1052931508
 ```Elisp
 (defun mb/org-babel-edit:python ()
