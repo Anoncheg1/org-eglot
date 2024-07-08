@@ -1,4 +1,4 @@
-;;; dired-hist-tl.el --- Traverse Dired buffer's history: back, forward -*- lexical-binding: t -*-
+;;; org-eglot.el --- Traverse Dired buffer's history: back, forward -*- lexical-binding: t -*-
 ;; Copyright (C) 2024 github.com/Anoncheg1,codeberg.org/Anoncheg
 
 ;; Author: github.com/Anoncheg1,codeberg.org/Anoncheg
@@ -34,10 +34,13 @@
 
 ;; - if no :dir for src block was specified as remote we configure
 ;;   Eglot for remote connection.
+
+;;; Code:
+
 (defcustom org-eglot-starter #'my/eglot-start
   "`eglot-ensure' or wrap around it.
 May check `default-directory' or `buffer-file-name and decide
-what `eglot-server-programs' to use.  Check that buffer-file-name
+what `eglot-server-programs' to use.  Check that variable `buffer-file-name'
 is remote and call `eglot-ensure' function.
 Consider `eglot-shutdown-all' for reconnection."
   :type 'function)
@@ -47,10 +50,13 @@ Consider `eglot-shutdown-all' for reconnection."
   :type 'function)
 
 (defun org-eglot--org-edit-special-advice (orig-fun &rest args)
-  "Edit python src block with lsp support by tangling the block and
-then setting the org-edit-special buffer-file-name to the
-absolute path. Finally load eglot. By default tangle to /tmp/tmp.py.
-Source block should have :dir value /ssh:host:."
+  "Edit python src block with LSP support.
+By tangling the block and then setting the `org-edit-special'
+variable `buffer-file-name' to the absolute path.  Finally load
+eglot.  By default tangle to /tmp/tmp.py.  Source block should
+have :dir value /ssh:host:.
+Argument ORIG-FUN is original `org-edit-special' function.
+Optional argument ARGS ."
   (interactive)
   (let* ((info (org-babel-get-src-block-info)) ; available only here
          (dir (cdr (assq :dir (nth 2 info))))
@@ -84,3 +90,7 @@ Source block should have :dir value /ssh:host:."
         (funcall org-eglot-starter-local)))))
 
 (advice-add 'org-edit-special :around 'org-eglot--org-edit-special-advice)
+
+
+(provide 'org-eglot)
+;;; org-eglot.el ends here
