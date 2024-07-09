@@ -61,13 +61,16 @@ Argument ORIG-FUN is original `org-edit-special' function.
 Optional argument ARGS ."
   (interactive)
   (let* ((info (org-babel-get-src-block-info)) ; available only here
-         (dir (cdr (assq :dir (nth 2 info))))
+         (dir (cdr (assq :dir (nth 2 info)))) ; string
+         (lang (nth 0 info)) ; programming language of source block
+         (languages (mapconcat 'identity (mapcar 'symbol-name (mapcar 'car eglot-server-programs)) "" ))
          tangled-file-name)
     ;; (print (list "dir" dir))
-    ;; if dir specified and remote
-    (if (and dir (file-remote-p dir))
+    ;; if 1) dir specified 2) dir remote 3) eglot-server-programs have language of source block
+    (if (and dir (file-remote-p dir) (string-match-p lang languages))
         (progn
           (setq tang (assoc-default :tangle (nth 2 info)))
+          ;; set tangle name for local or remote host
           (setq tangled-file-name (if (string-equal tang "no")
                                       (concat dir "/tmp/tmp.py")
                                     ;; else

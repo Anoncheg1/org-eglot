@@ -1,7 +1,11 @@
 # org-eglot
 Allow to edit "Org source block" with Eglot and TRAMP on remote LSP server.
 
-Eglot+TRAMP require block to be tangled/exported to file, we use “/tmp/tmp.py” by default.
+Eglot+TRAMP require block to be tangled/exported to file, we use “/tmp/tmp.py” by default. See Source below.
+
+We check that
+1) “eglot-server-programs” variable have language specified for Org source block
+2) :dir argument specified and remote
 
 # Example of usage
 ```Elisp
