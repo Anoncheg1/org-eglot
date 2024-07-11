@@ -64,7 +64,7 @@ Optional argument ARGS ."
          (dir (cdr (assq :dir (nth 2 info)))) ; string
          (lang (nth 0 info)) ; programming language of source block
          (languages (mapconcat 'identity (mapcar 'symbol-name (mapcar 'car eglot-server-programs)) "" ))
-         tangled-file-name)
+         tangled-file-name tang)
     ;; (print (list "dir" dir))
     ;; if 1) dir specified 2) dir remote 3) eglot-server-programs have language of source block
     (if (and dir (file-remote-p dir) (string-match-p lang languages))
